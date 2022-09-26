@@ -26,4 +26,14 @@ export class DonationsService {
       where: donationWhereUniqueInput,
     });
   }
+
+  async getTotal() {
+    const response = await this.prisma.donation.aggregate({
+      _sum: {
+        count: true,
+      },
+    });
+
+    return response._sum.count;
+  }
 }
